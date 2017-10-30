@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.spring.demo.constants.ModelConstants;
 import pl.spring.demo.constants.ViewNames;
-import pl.spring.demo.dao.BookDao;
-import pl.spring.demo.mapper.BookMapper;
+
+import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
 /**
@@ -29,71 +30,58 @@ import pl.spring.demo.to.BookTo;
 @Controller
 @RequestMapping("/books")
 public class BookController {
-	
+
 	@Autowired
-	private BookDao bookdao;
-	@Autowired
-	private BookMapper bookmapper;
+	private BookService bookService;
 
 	@RequestMapping
 	public String list(Model model) {
-		
-		
-		// TODO: implement default method
+		List<BookTo> books = bookService.findAllBooks();
+		model.addAttribute(ModelConstants.BOOK_LIST, books);
 		return ViewNames.BOOKS;
 	}
 
-	/**
-	 * Method collects info about all books
-	 */
-	@RequestMapping("/all")
-	public ModelAndView allBooks() {
-		ModelAndView modelAndView = new ModelAndView();
-		
-		modelAndView.setViewName(ViewNames.BOOKS);
-		modelAndView.addObject(ModelConstants.BOOK_LIST,bookdao.findAll());
-		// TODO: implement method gathering and displaying all books
-		
-		return modelAndView;
-	}
-	
 	@RequestMapping("books-by-title/${title}")
-	public List <BookTo> bookByTitle(@PathVariable("title") String title,Model model) {
-		
-		model.addAttribute(ModelConstants.BOOK, bookdao.findBookByTitle(title));
-		
-		return bookmapper.map2To(bookdao.findBookByTitle(title));
-		
-		
-		
-	
-	// TODO: here implement methods which displays book info based on query
-	// arguments
+	public List<BookTo> bookByTitle(@PathVariable("title") String title, Model model) {
 
-		
+		List bookByTitle = bookService.findBooksByTitle(title);
+		model.addAttribute(ModelConstants.BOOK, bookService.findBooksByTitle(title));
+		return bookByTitle;
+
+		// TODO: here implement methods which displays book info based on query
+		// arguments
+
 	}
-	
-	@RequestMapping(value="/newBook",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/book", method = RequestMethod.GET)
+	public String findBookDetails(@RequestParam("id") Long id, Model model) {
+		model.addAttribute(bookService.findBooksById(id));
+		return ViewNames.BOOK;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addBook(@ModelAttribute("book") BindingResult result) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return ViewNames.ADD_BOOK;
 		} else {
 			return "redirect:/books";
 		}
 
-	// TODO: Implement GET / POST methods for "add book" functionality
-	
-		
+		// TODO: Implement GET / POST methods for "add book" functionality
+
 	}
-	@RequestMapping(value="/newBook",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String newBook() {
 		return ViewNames.ADD_BOOK;
 	}
 	
-	
-	
-	
-		/**
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public String searchForBooks() {
+		return ViewNames.SEARCH;
+	}
+
+	/**
 	 * Binder initialization
 	 */
 	@InitBinder
