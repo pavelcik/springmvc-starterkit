@@ -3,6 +3,7 @@ package pl.spring.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class SearchController {
 		return ViewNames.SEARCH2;
 	}
 	@RequestMapping("/result")
-	public String searchForm(@RequestParam String title,@RequestParam String author,Model model) {
+	public String searchForm(@RequestParam(value="title",required=false) String title,@RequestParam(value="author",required=false) String author,Model model) {
 		List<BookTo> foundBook = bookService.findBooksByAuthorOrByTitle(author, title);
 		model.addAttribute(ModelConstants.BOOK_LIST,foundBook);
 		return ViewNames.BOOKS;	

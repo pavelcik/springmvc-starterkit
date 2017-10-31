@@ -33,9 +33,9 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(Principal user) {
 		ModelAndView model = new ModelAndView();
-
-		// TODO: implement mechanism redirecting to new custom page _403
-		// (consider extending informations by custom values)
+		String message = "is not allowed to enter this site.";
+		String errorMessage = user.getName()+message;
+		model.addObject(errorMessage);
 		return model;
 
 	}

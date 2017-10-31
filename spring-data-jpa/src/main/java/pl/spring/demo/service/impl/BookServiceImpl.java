@@ -46,14 +46,13 @@ public class BookServiceImpl implements BookService {
         List<BookTo> books = null;
         if(author.isEmpty()) {
         	books = findBooksByTitle(title);
-        	return books;
-        } else if(title.isEmpty()) {
+        } if(title.isEmpty()) {
         	books = findBooksByAuthor(author);
-        	return books;
-        }else if(title.isEmpty()&&author.isEmpty()) {
-        	return books;
-        } else 
+        } if(title.isEmpty()&&author.isEmpty()) {
+        	 books = findAllBooks();
+        } if(!title.isEmpty()&&!author.isEmpty()) 
         	return findBooksByAuthorAndTitle(author, title);
+		return books;
     }
     
     

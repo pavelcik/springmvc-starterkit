@@ -12,7 +12,7 @@
 <h1>Search books</h1>
 <form action="/webstore/books/result" method="GET">
 Book title: <input type="text" name="title"><br>
-Book author: <input type="text" name="authors"><br>
+Book author: <input type="text" name="author"><br>
 <input type="submit" value="submit">
 </form>
 <br>

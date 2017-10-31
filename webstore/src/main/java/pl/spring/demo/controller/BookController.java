@@ -34,8 +34,7 @@ public class BookController {
 
 	@Autowired
 	private BookService bookService;
-	@Autowired 
-	private BookRepository bookRepository;
+
 
 	@RequestMapping
 	public String list(Model model) {
@@ -44,17 +43,9 @@ public class BookController {
 		return ViewNames.BOOKS;
 	}
 
-	@RequestMapping("books-by-title/${title}")
-	public List<BookTo> bookByTitle(@PathVariable("title") String title, Model model) {
 
-		List bookByTitle = bookService.findBooksByTitle(title);
-		model.addAttribute(ModelConstants.BOOK, bookService.findBooksByTitle(title));
-		return bookByTitle;
 
-		// TODO: here implement methods which displays book info based on query
-		// arguments
 
-	}
 	
 	@RequestMapping(value = "/book", method = RequestMethod.GET)
 	public String findBookDetails(@RequestParam Long id, Model model) {
@@ -63,24 +54,12 @@ public class BookController {
 		return ViewNames.BOOK;
 	}
 	
-
-//	@RequestMapping(value = "/add", method = RequestMethod.POST)
-//	public String addBook(@ModelAttribute("book") BindingResult result) {
-//		if (result.hasErrors()) {
-//			return ViewNames.ADD_BOOK;
-//		} else {
-//			return "redirect:/books";
-//		}
-//
-//		// TODO: Implement GET / POST methods for "add book" functionality
-//
-//	}
-//
-//	@RequestMapping(value = "/add", method = RequestMethod.GET)
-//	public String newBook() {
-//		return ViewNames.ADD_BOOK;
-//	}
-//	
+	@RequestMapping(value = "/delete")
+	public String deleteBook(@RequestParam Long id, Model model) {
+		bookService.deleteBook(id);
+		return ViewNames.DELETE;
+	}
+	
 	
 
 	/**
