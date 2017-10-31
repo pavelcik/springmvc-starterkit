@@ -31,12 +31,10 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied(Principal user) {
-		ModelAndView model = new ModelAndView();
-		String message = "is not allowed to enter this site.";
-		String errorMessage = user.getName()+message;
-		model.addObject(errorMessage);
-		return model;
+	public String accesssDenied(Principal user,Model model) {
+		
+		model.addAttribute("user", user);
+		return ViewNames._403;
 
 	}
 }

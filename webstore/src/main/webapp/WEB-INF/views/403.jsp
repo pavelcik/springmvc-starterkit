@@ -13,7 +13,7 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>Error</h1>
-				<p>${errorMessage}</p>
+				<p>${user} has no rights required to access this page.</p>
 				<center><img src="https://ih0.redbubble.net/image.398805623.0699/ap,550x550,12x12,1,transparent,t.u3.png " align="middle"></center>
 			</div>
 		</div>
