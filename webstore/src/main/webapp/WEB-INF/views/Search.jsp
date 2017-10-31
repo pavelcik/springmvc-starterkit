@@ -28,7 +28,7 @@
 							<fieldset>
 								<div class="form-group">
 									<input class="form-control" placeholder="title"
-										name='book.{title}' type="text">
+										name="title" type="text">
 								</div>
 								
 							<div class="panel panel-default">
@@ -39,7 +39,7 @@
 					
 								<div class="form-group">
 									<input class="form-control" placeholder="author"
-										name='book.{author}' type="text">
+										name="book.{author}" type="text">
 								</div>
 								<input class="btn btn-lg btn-success btn-block" type="submit"
 									value="Submit">
@@ -49,6 +49,9 @@
 				</div>
 			
 		</div>
+	</div>
+	<div>
+	${searchResult}
 	</div>
 </body>
 </html>

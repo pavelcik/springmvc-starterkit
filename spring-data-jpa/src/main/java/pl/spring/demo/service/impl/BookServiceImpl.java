@@ -35,8 +35,31 @@ public class BookServiceImpl implements BookService {
     }
     
     @Override
-	public List<BookTo> findBooksById(Long id) {
-		return BookMapper.map2To(bookRepository.findBookById(id));
+    public List<BookTo> findBooksByAuthorAndTitle(String author,String title) {
+        List<BookTo> result = findBooksByAuthor(author);
+        result = findBooksByTitle(title);
+    	return result;
+    }
+    
+    @Override
+    public List<BookTo> findBooksByAuthorOrByTitle(String author,String title) {
+        List<BookTo> books = null;
+        if(author.isEmpty()) {
+        	books = findBooksByTitle(title);
+        	return books;
+        } else if(title.isEmpty()) {
+        	books = findBooksByAuthor(author);
+        	return books;
+        }else if(title.isEmpty()&&author.isEmpty()) {
+        	return books;
+        } else 
+        	return findBooksByAuthorAndTitle(author, title);
+    }
+    
+    
+    @Override
+	public BookTo findBooksById(Long id) {
+		return BookMapper.map(bookRepository.findOne(id));
 	}
 
     @Override
