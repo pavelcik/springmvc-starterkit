@@ -33,7 +33,7 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accesssDenied(Principal user,Model model) {
 		
-		model.addAttribute("user", user);
+		model.addAttribute("user", user.getName());
 		return ViewNames._403;
 
 	}

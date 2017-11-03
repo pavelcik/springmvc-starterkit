@@ -18,9 +18,7 @@ public class BookRestService {
 	@Autowired
 	private BookService bookservice;
 	
-	//@RequestMapping(value= "/books/book")
-	//public List<BookTo> showBookDetails(@PathVariable("id") Long id) { 
-	
+
 		//
 		
 		// TODO: Inject properly book service

@@ -33,5 +33,7 @@
 			<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
 		</property>
 	</bean>
-
+	<bean class = "org.mockito.Mockito" factory-method="mock">
+	<constructor-arg value="pl.spring.demo.service.BookService" />
+	</bean>
 </beans>

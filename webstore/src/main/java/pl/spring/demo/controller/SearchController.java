@@ -37,8 +37,8 @@ public class SearchController {
 	}
 	@RequestMapping("/result")
 	public String searchForm(@RequestParam(value="title",required=false) String title,@RequestParam(value="author",required=false) String author,Model model) {
-		List<BookTo> foundBook = bookService.findBooksByAuthorOrByTitle(author, title);
-		model.addAttribute(ModelConstants.BOOK_LIST,foundBook);
+		List<BookTo> books = bookService.findBooksByAuthorOrByTitle(author, title);
+		model.addAttribute(ModelConstants.BOOK_LIST,books);
 		return ViewNames.BOOKS;	
 	}
 	

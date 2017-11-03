@@ -13,7 +13,7 @@ import pl.spring.demo.to.BookTo;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly=false)
 public class BookServiceImpl implements BookService {
 
     @Autowired

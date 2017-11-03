@@ -10,4 +10,4 @@ insert into book (id, title, authors, status) values (9, 'Third book', 'Janusz J
 insert into book (id, title, authors, status) values (10, 'Tenth book', 'Malgorzata Musierowicz', 'FREE');
 
 insert into userentity (id, user_name, password) values (1, 'admin', 'admin');
-insert into userentity (id, user_name, password) values (2, 'password', 'password');
+insert into userentity (id, user_name, password) values (2, 'user', 'user');
