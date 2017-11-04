@@ -21,5 +21,6 @@ public final class ViewNames implements Serializable {
 	public static final String DELETE = "delete";
 	public static final String SEARCH2 = "Search2";
 	public static final String NOTFOUND = "BookNotFound";
+	public static final String MAIN = "mainPage";
 	
 }

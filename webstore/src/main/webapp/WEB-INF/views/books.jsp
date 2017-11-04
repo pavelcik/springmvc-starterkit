@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	href="http://getbootstrap.com/dist/css/bootstrap.min.css">
 <title>Books</title>
 </head>
 <body>
@@ -14,41 +14,56 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>Books</h1>
-				<p>This page contains all informations about books</p>
+				
 			</div>
 		</div>
 	</section>
+	
+	 <div class="album text-muted">
+        <div class="container">
+        	<div align=right>
+					
+					<p>
+					<a href="<spring:url value="/" />" class="btn btn-default">
+						<span class="glyphicon-hand-left glyphicon"></span> Main Page
+					</a>
 
-	<section class="container">
+				</p>
+				
+
+			</div>
 		<div class="row">
 			<c:forEach items="${bookList}" var="book">
-				<div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
-					<div class="thumbnail">
-						<div class="caption">
-							<h3>${book.id}</h3>
-							<p>${book.title}</p>
-							<p>${book.authors}</p>
-							<p>Status: ${book.status}</p>
-							<p>
-								<a
+			 <div class="card" style="
+    width: 202px;
+    height: 302px;
+
+">
+              <center><img src="https://openclipart.org/download/275692/1489798288.svg" style="width: 160px;height: 160px;"  alt="" class="img-responsive center-block"></center>
+            <center> <p class="card-text"> ${book.title}</p> 
+            <p> ${book.authors} </p> </center>
+            
+              <p>
+          <center>
+							<a
 									href=" <spring:url value="/books/book?id=${book.id}" /> "
 									class="btn btn-primary"> <span
 									class="glyphicon-info-sign glyphicon" /></span> Details
 								</a>
-							</p>
-							<p>
+							
+							
 								<a
 									href=" <spring:url value="/books/delete?id=${book.id}" /> "
-									class="btn btn-primary"> <span
+									class="btn btn-danger"> <span
 									class="glyphicon-info-sign glyphicon" /></span> Delete
 								</a>
 							</p>
-
+						</center>	
 						</div>
-					</div>
-				</div>
+					
 			</c:forEach>
 		</div>
-	</section>
+		</div>
+	</div> 
 </body>
 </html>

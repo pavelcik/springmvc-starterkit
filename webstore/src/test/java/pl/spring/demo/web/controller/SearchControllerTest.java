@@ -73,19 +73,7 @@ public class SearchControllerTest {
 
 	}
 
-	@Test
-	public void showIfRightResultIsReturned() throws Exception {
-		mockMvc.perform(get("books/result").param("author", "aaa").param("title", ""))
-				.andExpect(model().attribute(ModelConstants.BOOK, new ArgumentMatcher<Object>() {
-
-					@Override
-					public boolean matches(Object argument) {
-						List<BookTo> foundBooks = (List<BookTo>) argument;
-						return foundBooks.isEmpty();
-					}
-
-				}));
-	}
+	
 
 	@Test
 	public void showResultReturnsList() throws Exception {
@@ -113,10 +101,33 @@ public class SearchControllerTest {
 					@Override
 					public boolean matches(Object argument) {
 						List<BookTo> text = (List<BookTo>) argument;
-						return !text.isEmpty() && text.size() == books.size();
+						return text!=null && text.size() == books.size();
 
 					}
 				}));
 		Mockito.verify(bookService, Mockito.times(1)).findBooksByAuthorOrByTitle("author", "title");
 	}
+	
+	@Test
+	public void showResultNoParameters() throws Exception {
+		List<BookTo> books = new ArrayList<>();
+		List<BookTo> booksEmpty = new ArrayList<>();
+		books.add(new BookTo(0L, "title", "author", BookStatus.FREE));
+		books.add(new BookTo(1L, "title", "author", BookStatus.FREE));
+		Mockito.when(bookService.findBooksByAuthorOrByTitle("aaaaaa", "title")).thenReturn(booksEmpty);
+
+		mockMvc.perform(get("/books/result").param("author", "aaaaaa").param("title", "title"))
+				.andExpect(view().name("books")).andExpect(status().isOk())
+				.andExpect(model().attribute(ModelConstants.BOOK_LIST, new ArgumentMatcher<Object>() {
+					@Override
+					public boolean matches(Object argument) {
+						List<BookTo> text = (List<BookTo>) argument;
+						return text!=null && text.size() == booksEmpty.size();
+
+					}
+				}));
+		Mockito.verify(bookService, Mockito.times(1)).findBooksByAuthorOrByTitle("aaaaaa", "title");
+	}
+	
+	
 }

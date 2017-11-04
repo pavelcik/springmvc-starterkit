@@ -47,13 +47,13 @@ public class BookControllerTest {
 
 	@Before
 	public void setup() {
+		Mockito.reset(bookService);
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(bookController).setViewResolvers(viewResolver).build();
 		ReflectionTestUtils.setField(bookController, "bookService", bookService);
-
 	}
 
 	@Test
@@ -63,20 +63,45 @@ public class BookControllerTest {
 	}
 
 	@Test
-	public void deleteABookView() throws Exception {
-
-		mockMvc.perform(delete("/books/delete?id=1")).andExpect(view().name("delete")).andExpect(status().isOk());
+	public void shouldReturnDeleteABookView() throws Exception {
+		BookTo book0 = new BookTo(0L, "Dzieci z Bullerbyn", "Astrid Lindrgen", BookStatus.FREE);
+		BookTo book1 = new BookTo(1L, "Perfekcyjna Pani Domu", "Małgorzata Rozenek", BookStatus.FREE);
+		BookTo book2 = new BookTo(2L, "Harry Potter i Kamień Filozoficzny", "Joanne K. Rowling", BookStatus.LOAN);
+		Mockito.when(bookService.findBooksById(2L)).thenReturn(book2);
+		mockMvc.perform(delete("/books/delete?id=2")).andExpect(view().name("delete")).andExpect(status().isOk());
 
 	}
 
 	@Test
+	public void shouldReturnNoBookFoundView() throws Exception {
+		BookTo book0 = new BookTo(0L, "Dzieci z Bullerbyn", "Astrid Lindrgen", BookStatus.FREE);
+		BookTo book1 = new BookTo(1L, "Perfekcyjna Pani Domu", "Małgorzata Rozenek", BookStatus.FREE);
+		BookTo book2 = new BookTo(2L, "Harry Potter i Kamień Filozoficzny", "Joanne K. Rowling", BookStatus.LOAN);
+		Mockito.when(bookService.findBooksById(3L)).thenReturn(null);
+		mockMvc.perform(delete("/books/delete?id=3")).andExpect(view().name("BookNotFound")).andExpect(status().isOk());
+
+	}
+	
+	@Test
 	public void testBookListPage() throws Exception {
 		// given when
-
-		ResultActions resultActions = mockMvc.perform(get("/books/book?id=1"));
+		BookTo book0 = new BookTo(0L, "Dzieci z Bullerbyn", "Astrid Lindrgen", BookStatus.FREE);
+		BookTo book1 = new BookTo(1L, "Perfekcyjna Pani Domu", "Małgorzata Rozenek", BookStatus.FREE);
+		BookTo book2 = new BookTo(2L, "Harry Potter i Kamień Filozoficzny", "Joanne K. Rowling", BookStatus.LOAN);
+		Mockito.when(bookService.findBooksById(1L)).thenReturn(book1);
+		mockMvc.perform(get("/books/book?id=1"))
 
 		// then
-		resultActions.andExpect(view().name("book"));
+		.andExpect(view().name("book"))
+		.andExpect(model().attribute(ModelConstants.BOOK, new ArgumentMatcher<Object>() {
+
+			@Override
+			public boolean matches(Object argument) {
+				BookTo book1 = (BookTo) argument;
+				return book1.getAuthors() =="Małgorzata Rozenek" &&book1!=null;
+			}
+			
+		}));
 	}
 
 	@Test
@@ -89,7 +114,7 @@ public class BookControllerTest {
 		Mockito.when(bookService.findBooksById(0L)).thenReturn(books.get(0));
 		Mockito.verifyNoMoreInteractions(bookService);
 	}
-	
+
 	@Test
 	public void testIfAllBooksWillBeReturned() {
 		List<BookTo> books = new ArrayList<>();

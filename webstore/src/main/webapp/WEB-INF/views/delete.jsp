@@ -5,22 +5,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<title>Book deleted</title>
+	href="http://getbootstrap.com/dist/css/bootstrap.min.css">
+
 
 <title>Book Deleted!</title>
+<style>
+body {
+    background-image: url("https://stefandanielkeller.files.wordpress.com/2013/07/7_book-garbage.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-right: 200px;
+}
+</style>
 </head>
 <body>
-	<section>
-		<div class="jumbotron">
+
+		
 			<div class="container">
+			
+					
 				<h1>The book was deleted from the repository.</h1>
-				<form>
-<input type="button" value="Back to book list" onclick="window.location.href='/webstore/books'" />
-</form>
-			</div>
-		</div>
-	</section>
-	
+
+	<a href="/webstore/books"  class="btn btn-default">
+						<span class="glyphicon-hand-left glyphicon"></span>Back to BookList
+					</a>
+	</div>
 	</body>
 	</html>
